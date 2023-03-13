@@ -20,11 +20,8 @@
         prop="logoUrl"
         label="品牌LOGO"
       >
-<!--        <template slot-scope="scope">-->
-<!--          <img :src="scope.row.logoUrl" style="width: 120px;height: 70px"/>-->
-<!--        </template>-->
         <template v-slot="{row,$index}">
-          <img :src="row.logoUrl" style="width: 120px;height: 70px"/>
+          <img :src="row.logoUrl" style="width: 100px;height: 70px"/>
         </template>
       </el-table-column>
       <el-table-column
@@ -125,7 +122,6 @@ export default {
           { required: true,validator: checkImg}
         ]
       },
-      resultCode: ''
     }
   },
   methods: {
@@ -134,7 +130,7 @@ export default {
       // 从当前组件中解构参数
       const { page, limit } = this
       let result = await this.$API.tradeMark.reqGetTrademarkList(page, limit)
-      console.log(result)
+      // console.log(result)
       if (result.code === 200) {
         this.tableData = result.data.records
         this.total = result.data.total
@@ -159,8 +155,11 @@ export default {
       this.dialogFormVisible = true
       // this.form.tmName = row.tmName
       // this.form.logoUrl = row.logoUrl
+      // 这种赋值方式是错误的，不需要点击 确定按钮就直接修改了表单内容，因为这里有数据双向绑定
+
       // 浅拷贝
-      this.form = { ...row }
+      // this.form = { ...row }
+      Object.assign(this.form,row)
       // let result = await this.$API.tradeMark.reqUpdateTradeList(row)
       // console.log(result)
     },
@@ -205,12 +204,10 @@ export default {
           console.log('error submit!!');
           return false;
         }
-        // this.dialogFormVisible = false
-
       });
     },
     // 删除品牌
-    async deleteTradeMark(row) {
+    deleteTradeMark(row) {
       this.$confirm(`你确定删除${row.tmName}品牌信息?`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
