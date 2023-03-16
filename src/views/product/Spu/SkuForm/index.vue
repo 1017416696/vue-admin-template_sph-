@@ -79,7 +79,7 @@
             label="图片"
             width="120">
             <template v-slot="{row,$index}">
-              <img :src="row.imgUrl" style="width: 100px;height: 100px"/>
+              <img v-lazy="row.imgUrl" style="width: 100px;height: 100px" :key="$index" />
             </template>
           </el-table-column>
           <el-table-column
@@ -107,6 +107,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'SkuForm',
   data() {

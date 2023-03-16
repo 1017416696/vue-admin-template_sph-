@@ -22,7 +22,8 @@
       </el-table-column>
       <el-table-column
         label="默认图片"
-        width="130"
+        width="160"
+        align="center"
       >
         <template v-slot="{row,$index}">
           <img :src="row.skuDefaultImg" style="width: 100px;height: 100px" />

@@ -28,7 +28,6 @@
             label="属性名称">
           </el-table-column>
           <el-table-column
-            prop="attrValueList"
             label="属性值列表"
             width="900"
           >
@@ -80,10 +79,9 @@
           </el-table-column>
           <el-table-column
             label="属性值名称"
-            prop="valueName"
           >
             <template v-slot={row,$index}>
-<!--              这里使用 v-if 更方便，v-if v-else-->
+<!--              这里使用 v-if 更方便，v-if v-else 显示和隐藏-->
               <el-input
                 v-model="row.valueName"
                 placeholder="请输入属性值"

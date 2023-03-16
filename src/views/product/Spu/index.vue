@@ -71,7 +71,7 @@
             <el-table-column property="weight" label="重量"></el-table-column>
             <el-table-column label="默认图片">
               <template v-slot="{row,$index}">
-                <img :src="row.skuDefaultImg" style="width: 100px;height: 100px"/>
+                <img :src="row.skuDefaultImg" style="width: 100px;height: 100px" />
               </template>
             </el-table-column>
           </el-table>
@@ -112,6 +112,7 @@ export default {
       category1Id: '',
       category2Id: '',
       category3Id: '',
+      spuList:[],
       spu: {},
       // 分页器第几页
       page: 1,
@@ -210,11 +211,6 @@ export default {
         this.loading = false
       }
     },
-    // 关闭对话框的回调
-    // closeDialog() {
-    //   this.loading = true
-    //   this.tableData = []
-    // }
   }
 }
 </script>
@@ -222,3 +218,4 @@ export default {
 <style scoped>
 
 </style>
+

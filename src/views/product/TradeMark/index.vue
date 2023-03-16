@@ -17,7 +17,6 @@
         label="品牌名称">
       </el-table-column>
       <el-table-column
-        prop="logoUrl"
         label="品牌LOGO"
       >
         <template v-slot="{row,$index}">

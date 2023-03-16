@@ -41,6 +41,11 @@ import MyButton from '@/components/MyButton/index.vue'
 Vue.component('MyButton',MyButton)
 Vue.config.productionTip = false
 
+import VueLazyload from 'vue-lazyload'
+const gif = require('./assets/loading.gif')
+// import gif from '@/assets/loading.gif'
+Vue.use(VueLazyload,{loading: gif })
+
 new Vue({
   el: '#app',
   router,
