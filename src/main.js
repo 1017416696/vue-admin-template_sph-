@@ -33,7 +33,7 @@ Vue.use(ElementUI, { locale })
 // Vue.use(ElementUI)
 import API from '@/api/index'
 Vue.prototype.$API = API
-console.log(API)
+// console.log(API)
 
 import CategorySelect from '@/components/CategorySelect/index.vue'
 Vue.component('CategorySelect',CategorySelect)
@@ -52,3 +52,4 @@ new Vue({
   store,
   render: h => h(App)
 })
+

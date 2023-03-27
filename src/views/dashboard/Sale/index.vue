@@ -3,7 +3,7 @@
     <div slot="header" class="clearfix">
       <el-tabs class="tab" @tab-click="handleClick"  v-model="activeName">
 <!--        收集的内容最好别是中文-->
-        <el-tab-pane label="销售额" name="sale" lazy>
+        <el-tab-pane label="销售额" name="sale">
           <div class="content">
             <el-row :gutter="15">
               <el-col :span="18">
@@ -223,6 +223,7 @@
         <span @click="setWeek">本周</span>
         <span @click="setMonth">本月</span>
         <span @click="setYear">本年</span>
+
 <!--        value-format 收集日期的格式 -->
         <el-date-picker
           class="date"
@@ -243,6 +244,7 @@
 <script>
 import * as echarts from 'echarts'
 import dayjs from 'dayjs'
+import { mapState } from 'vuex'
 export default {
   name: 'index',
   data(){
@@ -292,52 +294,71 @@ export default {
           }
         ]
       },
-      dataX: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-      dataY1:  [400, 52, 200, 334, 390, 330, 220,90, 88, 78, 67, 65],
-      dataY2:  [30, 52, 600, 334, 390, 330, 110,90, 44, 78, 67, 65],
-      initData: {
-        dataX:[],
-        dataY:[]
-      },
+      // dataX: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+      // dataY1:  [400, 52, 200, 334, 390, 330, 220,90, 88, 78, 67, 65],
+      // dataY2:  [30, 52, 600, 334, 390, 330, 110,90, 44, 78, 67, 65],
+      // initData: {
+      //   dataX:[],
+      //   dataY:[]
+      // },
       // 日历数据
       date:[]
     }
   },
+  // mapState(['orderFullYearAxis','orderFullYear','userFullYearAxis','userFullYear']),
+  computed: mapState({
+    // 箭头函数可使代码更简练
+    orderFullYearAxis: state => state.home.chartData.orderFullYearAxis,
+    orderFullYear: state => state.home.chartData.orderFullYear,
+    userFullYearAxis: state => state.home.chartData.userFullYearAxis,
+    userFullYear: state => state.home.chartData.userFullYear,
+  }),
+  watch: {
+    orderFullYearAxis: {
+      handler() {
+          this.chart1.setOption({
+            xAxis: [
+              {
+                data: this.orderFullYearAxis
+              }
+            ],
+            series: [
+              {
+                data: this.orderFullYear
+              }
+            ]
+          })
+      }
+    },
+  },
   methods: {
     //  tab.label tab.name
     handleClick(tab) {
-      this.chart1.setOption({
-        xAxis: [
-          {
-            type: 'category',
-            data: this.dataX,
-            axisTick: {
-              alignWithLabel: true
-            }
-          }
-        ],
-        series: [
-          {
-            data:  tab.name == 'sale' ? this.dataY1 : this.dataY2
-          }
-        ]
-      })
-      this.chart2.setOption({
+        this.chart1.setOption({
           xAxis: [
             {
-              type: 'category',
-              data: this.dataX,
-              axisTick: {
-                alignWithLabel: true
-              }
+              data: tab.name === 'sale' ? this.orderFullYearAxis : []
             }
           ],
           series: [
             {
-              data:  tab.name == 'sale' ? this.dataY1 : this.dataY2
+              data: tab.name === 'sale' ? this.orderFullYear : []
             }
           ]
         })
+        this.chart2.setOption({
+          xAxis: [
+            {
+              data: tab.name === 'visit' ? this.userFullYearAxis : []
+            }
+          ],
+          series: [
+            {
+              data:tab.name === 'visit' ? this.userFullYear : []
+            }
+          ]
+        })
+
     },
     // 今天
     setToday() {
@@ -370,22 +391,22 @@ export default {
     this.chart1.setOption(this.chart1Options)
     this.chart2 = echarts.init(this.$refs.chart2)
     this.chart2.setOption(this.chart1Options)
-    setTimeout(()=>{
-      this.initData.dataX = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
-      this.initData.dataY = [30, 52, 600, 334, 390, 330, 110,90, 44, 78, 67, 65]
-      this.chart1.setOption({
-        xAxis: [
-          {
-            data: this.initData.dataX,
-          }
-        ],
-        series: [
-          {
-            data:  this.initData.dataY,
-          }
-        ]
-      })
-    },500)
+    // setTimeout(()=>{
+    //   this.initData.dataX = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
+    //   this.initData.dataY = [30, 52, 600, 334, 390, 330, 110,90, 44, 78, 67, 65]
+    //   this.chart1.setOption({
+    //     xAxis: [
+    //       {
+    //         data: this.initData.dataX,
+    //       }
+    //     ],
+    //     series: [
+    //       {
+    //         data:  this.initData.dataY,
+    //       }
+    //     ]
+    //   })
+    // },500)
   }
 }
 </script>

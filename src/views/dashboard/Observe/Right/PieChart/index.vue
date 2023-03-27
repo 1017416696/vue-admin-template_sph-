@@ -13,7 +13,7 @@ export default {
     // 用 Vue 的方式获取dom
     let myPie = echarts.init(this.$refs.charts);
     const option = {
-      // 让标题在容器中间显示
+      // backgroundColor: '#f0f0f0',
       title : {
         text: 'Direct',
         subtext: '735',
@@ -21,6 +21,7 @@ export default {
           fontSize: 15,
           fontWeight: 'bolder'
         },
+        // 让标题在容器中间显示
         left: 'center',
         top: 'center'
       },
@@ -81,5 +82,6 @@ export default {
 .charts{
   width: 100%;
   height: 320px;
+  margin-top: -26px;
 }
 </style>

@@ -12,7 +12,10 @@ import Sale from '@/views/dashboard/Sale/index.vue'
 import Observe from '@/views/dashboard/Observe/index.vue'
 export default {
   name: 'Dashboard',
-  components:{Card,Sale,Observe}
+  components:{Card,Sale,Observe},
+  mounted() {
+    this.$store.dispatch('getData')
+  }
 }
 </script>
 

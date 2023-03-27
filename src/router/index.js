@@ -55,6 +55,12 @@ export const constantRoutes = [
     }]
   },
 
+
+
+
+]
+
+export const asyncRoutes = [
   {
     path: '/product',
     component: Layout,
@@ -88,9 +94,47 @@ export const constantRoutes = [
     ]
   },
 
-  // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  {
+    path: '/auth',
+    component: Layout,
+    name: 'Auth',
+    meta: { title: '权限管理', icon: 'el-icon-user' },
+    children: [
+      {
+        path: 'user',
+        name: 'User',
+        component: () => import('@/views/auth/User/index.vue'),
+        meta: { title: '用户管理'}
+      },
+      {
+        path: 'role',
+        name: 'Role',
+        component: () => import('@/views/auth/Role/index.vue'),
+        meta: { title: '角色管理'}
+      },
+      {
+        path: 'role/auth/:id',
+        name: 'RoleAuth',
+        component: () => import('@/views/auth/Role/RoleAuth/index.vue'),
+        meta: { title: '角色授权'},
+        // 不显示该菜单
+        hidden: true
+      },
+      {
+        path: 'menu',
+        name: 'Menu',
+        component: () => import('@/views/auth/Menu/index.vue'),
+        meta: { title: '菜单管理'}
+      }
+    ]
+  },
 ]
+
+// 404 page must be placed at the end !!!
+
+export const anyRoutes = { path: '*', redirect: '/404', hidden: true }
+
+
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support

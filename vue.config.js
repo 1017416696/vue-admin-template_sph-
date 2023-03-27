@@ -44,8 +44,9 @@ module.exports = {
         pathRewrite: { '^/dev-api': '' },
         // changeOrigin: true
       }
-    }
-    // before: require('./mock/mock-server.js')
+    },
+    // 改成 after
+    after: require('./mock/mock-server.js')
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
